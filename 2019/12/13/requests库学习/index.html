@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="安装&amp;amp;&amp;amp;使用安装 1pip install request  请求发送请求12345678910import request# get请求r = requests.get(&amp;apos;https:&#x2F;&#x2F;api.github.com&#x2F;events&amp;apos;)# post请求r = requests.post(&amp;apos;http:&#x2F;&#x2F;httpbin.org&#x2F;post&amp;apos;, data = &amp;#123;&amp;apos;key&amp;apos;:&amp;apos;v">
+<meta name="description" content="安装&amp;amp;&amp;amp;使用安装 1pip install request  请求发送请求12345678910import request# get请求r = requests.get(&amp;apos;http:&#x2F;&#x2F;39.97.111.215:18001&#x2F;&amp;apos;)# post请求r = requests.post(&amp;apos;http:&#x2F;&#x2F;httpbin.org&#x2F;post&amp;apos;, data = &amp;#123;&amp;apos;key&amp;apos;:&amp;apos;val">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="requests库学习">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;13&#x2F;requests%E5%BA%93%E5%AD%A6%E4%B9%A0&#x2F;index.html">
 <meta property="og:site_name" content="t0ng">
-<meta property="og:description" content="安装&amp;amp;&amp;amp;使用安装 1pip install request  请求发送请求12345678910import request# get请求r = requests.get(&amp;apos;https:&#x2F;&#x2F;api.github.com&#x2F;events&amp;apos;)# post请求r = requests.post(&amp;apos;http:&#x2F;&#x2F;httpbin.org&#x2F;post&amp;apos;, data = &amp;#123;&amp;apos;key&amp;apos;:&amp;apos;v">
+<meta property="og:description" content="安装&amp;amp;&amp;amp;使用安装 1pip install request  请求发送请求12345678910import request# get请求r = requests.get(&amp;apos;http:&#x2F;&#x2F;39.97.111.215:18001&#x2F;&amp;apos;)# post请求r = requests.post(&amp;apos;http:&#x2F;&#x2F;httpbin.org&#x2F;post&amp;apos;, data = &amp;#123;&amp;apos;key&amp;apos;:&amp;apos;val">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-13T03:06:43.513Z">
+<meta property="og:updated_time" content="2020-03-13T05:33:29.619Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -365,7 +365,7 @@
         <h2 id="安装-amp-amp-使用"><a href="#安装-amp-amp-使用" class="headerlink" title="安装&amp;&amp;使用"></a>安装&amp;&amp;使用</h2><p>安装</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install request</span><br></pre></td></tr></table></figure>
 
-<h4 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h4><h5 id="发送请求"><a href="#发送请求" class="headerlink" title="发送请求"></a>发送请求</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request</span><br><span class="line"><span class="comment"># get请求</span></span><br><span class="line">r = requests.get(<span class="string">'https://api.github.com/events'</span>)</span><br><span class="line"><span class="comment"># post请求</span></span><br><span class="line">r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;)</span><br><span class="line"><span class="comment"># 其他请求</span></span><br><span class="line">r = requests.put(<span class="string">'http://httpbin.org/put'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;)</span><br><span class="line">r = requests.delete(<span class="string">'http://httpbin.org/delete'</span>)</span><br><span class="line">r = requests.head(<span class="string">'http://httpbin.org/get'</span>)</span><br><span class="line">r = requests.options(<span class="string">'http://httpbin.org/get'</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h4><h5 id="发送请求"><a href="#发送请求" class="headerlink" title="发送请求"></a>发送请求</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request</span><br><span class="line"><span class="comment"># get请求</span></span><br><span class="line">r = requests.get(<span class="string">'http://39.97.111.215:18001/'</span>)</span><br><span class="line"><span class="comment"># post请求</span></span><br><span class="line">r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;)</span><br><span class="line"><span class="comment"># 其他请求</span></span><br><span class="line">r = requests.put(<span class="string">'http://httpbin.org/put'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;)</span><br><span class="line">r = requests.delete(<span class="string">'http://httpbin.org/delete'</span>)</span><br><span class="line">r = requests.head(<span class="string">'http://httpbin.org/get'</span>)</span><br><span class="line">r = requests.options(<span class="string">'http://httpbin.org/get'</span>)</span><br></pre></td></tr></table></figure>
 
 <h5 id="传参"><a href="#传参" class="headerlink" title="传参"></a>传参</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">payload = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: <span class="string">'value2'</span>&#125;</span><br><span class="line"><span class="comment"># get: http://httpbin.org/get?key2=value2&amp;key1=value1</span></span><br><span class="line">r = requests.get(<span class="string">"http://httpbin.org/get"</span>, params=payload)</span><br><span class="line"><span class="comment"># post</span></span><br><span class="line">r = requests.post(<span class="string">"http://httpbin.org/get"</span>, params=payload)</span><br></pre></td></tr></table></figure>
 
@@ -527,7 +527,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -540,7 +540,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -593,7 +593,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

